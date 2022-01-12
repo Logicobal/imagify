@@ -18,7 +18,7 @@ if(!empty($post_image))
 {
 	$explode = explode('.',$post_image);
 	$end = end($explode);
-	$allowed_ext = array('jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif');
+	$allowed_ext = array('jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'svg', 'SVG');
 
 	if(in_array($end, $allowed_ext))
 	{
@@ -52,7 +52,7 @@ if(!empty($bg_image))
 {
 	$explode = explode('.',$bg_image);
 	$end = end($explode);
-	$allowed_ext = array('jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif');
+	$allowed_ext = array('jpg', 'jpeg', 'JPG', 'JPEG', 'png', 'PNG', 'gif', 'svg', 'SVG');
 
 	if(in_array($end, $allowed_ext))
 	{

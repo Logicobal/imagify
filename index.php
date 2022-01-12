@@ -8,22 +8,27 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  </head>
-  <style type="text/css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    
+    <style type="text/css">
     .lllll {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 33.3333%;
-      background-color: grey;
-      height: 100px;
+      flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 312px;
+    /* background-color: grey; */
+    height: 123px;
+    flex-wrap: wrap;
+    padding: 10px;
     }
     .img_ar {
       width: 44px;
       height: 44px;
       border-radius: 100%;
+      -webkit-border-radius:100%;
+      -moz-border-radius: 100%;
       border: 2px solid #000;
       display: flex;
       align-items: center;
@@ -37,35 +42,26 @@
     }
   </style>
 
+  </head>
   <body>
     <div class="container">
       <h2>Form</h2>
       <form class="form-horizontal generate" method="post" enctype="multipart/form-data">
        
         <div class="form-group">
-          <label class="control-label col-sm-2" for="width">Width:</label>
+          <label class="control-label col-sm-2" for="height">Scale</label>
           <div class="col-sm-4">
             <input
               type="text"
               class="form-control"
-              id="width"
-              placeholder="width"
-              name="width"
+              id="scale"
+              placeholder="1"
+              name="scale"
+              value="1"
             />
           </div>
         </div>
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="height">Height:</label>
-          <div class="col-sm-4">
-            <input
-              type="text"
-              class="form-control"
-              id="height"
-              placeholder="height"
-              name="height"
-            />
-          </div>
-        </div>
+
         <div class="form-group">
           <label class="control-label col-sm-2" for="image">Image:</label>
 
@@ -96,7 +92,10 @@
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default" id="generate">Submit</button>
+            <button type="submit" class="btn btn-default" id="preview">Preview</button>
+          </div>
+          <div class="col-sm-offset-2 col-sm-10">
+            <a href="https://www.google.com" type="button" class="btn btn-default" id="generate">Generate</a>
           </div>
         </div>
       </form>
@@ -109,6 +108,9 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- <script src="https://superal.github.io/canvas2image/canvas2image.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <script>
       $(document).ready(()=>{
@@ -116,7 +118,16 @@
         $('.generate').on('submit', function(e){
           e.preventDefault();
 
+          let scale = $('#scale').val();
+
           let count  = $('#count').val();
+
+          if(scale>=2){
+            $('.lllll').css({
+              transform:`scale(${scale})`,
+              margin:'10% 20%'
+            })
+          }
          
           $.ajax({
                 url : "backwork.php",
@@ -145,24 +156,22 @@
 
                   $('.lllll').html(html);
 
+                      html2canvas(document.querySelector(".lllll")).then(canvas => {
+                          //  document.body.appendChild(canvas);
+                           var dataa = canvas.toDataURL('image/png');
+
+                           var href = dataa.replace("image/png", "image/octet-stream");
+                            $('#generate').attr('href', href);
+                            $('#generate').attr('download', 'imagify.png');
+                      });
+
                   console.log(newData)
                 }
           })
 
-         
-
         })
 
-      // document.getElementById("generate").addEventListener("click", function(e) {
-      //   e.preventDefault();
-      //   const imgFile = document.getElementById('image').files[0];
-      //   console.log(imgFile)
-
-      //   document.querySelector('.img_val').src = imgFile.name;
-
-
-      });
-      
+      });  
     </script>
   </body>
 </html>
