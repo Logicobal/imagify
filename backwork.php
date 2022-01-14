@@ -1,5 +1,5 @@
 <?php
-
+// Get the Image name, size and background
 $post_image = $_FILES['image']['name'];
 $post_image_size = $_FILES['image']['size'];
 $post_image_tmp = $_FILES['image']['tmp_name'];
@@ -8,12 +8,15 @@ $bg_image = $_FILES['bg_image']['name'];
 $bg_image_size = $_FILES['bg_image']['size'];
 $bg_image_tmp = $_FILES['bg_image']['tmp_name'];
 
+// Errors or Success msgs are stored in these varibales
 $msgImage= '';
 $msgBgImg= '';
 
+// Accessing parameters are into these variables
 $imgUrl = '';
 $bgUrl = '';
 
+// Code for Image
 if(!empty($post_image))
 {
 	$explode = explode('.',$post_image);
@@ -48,6 +51,7 @@ else
 	$msgImage ='Please choose image';
 }
 
+// Code for background Image
 if(!empty($bg_image))
 {
 	$explode = explode('.',$bg_image);
@@ -82,7 +86,7 @@ else
 	$msgBgImg ='Please choose image';
 }
 
-
+// Output int array
 $output = array(  
 	'msgImage'   	=>  $msgImage,
 	'imgUrl'   	    =>  $imgUrl,
@@ -90,6 +94,7 @@ $output = array(
     'bgUrl'   	    =>  $bgUrl,
 );  
 
+// output in JSON format and it would be accessed on AJAX call
 echo json_encode($output);
 
 ?>

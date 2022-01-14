@@ -46,6 +46,7 @@
   <body>
     <div class="container">
       <h2>Form</h2>
+      <!-- Form taking requirements -->
       <form class="form-horizontal generate" method="post" enctype="multipart/form-data">
        
         <div class="form-group">
@@ -118,10 +119,13 @@
         $('.generate').on('submit', function(e){
           e.preventDefault();
 
+          // Get the scale value
           let scale = $('#scale').val();
 
+          // Get the count value
           let count  = $('#count').val();
 
+          // styles would be applied on the of scale
           if(scale>=2){
             $('.lllll').css({
               transform:`scale(${scale})`,
@@ -129,24 +133,27 @@
             })
           }
          
+        //  Ajaax request for uploading Images
           $.ajax({
                 url : "backwork.php",
                 method : "POST",
-                data : new FormData(this),
+                data : new FormData(this), //data in form format
                 // dataType : 'JSON',
                 contentType:false,
                 processData:false,
                 success:function(data){
-                  let newData = JSON.parse(data)
+                  let newData = JSON.parse(data) //parse into JSON
 
                   var html = '';
                   // <div class="img_ar"></div>
                   // <img src="./img/flower.png" alt="" class="img_val">
                 
-                  $('.lllll').css('background-image', 'url('+newData.bgUrl+')');
+                  $('.lllll').css('background-image', 'url('+newData.bgUrl+')'); //Update backgroudn URl
 
+                  // Loop through images on the basis of number of counts
                   for(let i = 0; i<count; i++){
                     // $('.img_val').attr('src',newData.imgUrl);
+                   
                     html += `
                       <div class="img_ar">
                         <img src="${newData.imgUrl}" alt="" class="img_val">
@@ -154,14 +161,23 @@
                     `;
                   }
 
+                  // append into the element that has .lllll class name
                   $('.lllll').html(html);
 
+                    // This libaray help us to canvas by DOM rendered DOM elements
                       html2canvas(document.querySelector(".lllll")).then(canvas => {
                           //  document.body.appendChild(canvas);
+                          
+                          // Get the canvas data
                            var dataa = canvas.toDataURL('image/png');
-
+                          
+                          // Relplace that with Stream/ Alternative of Blob
                            var href = dataa.replace("image/png", "image/octet-stream");
+                          
+                          //  Assign Image link to Generate Button
                             $('#generate').attr('href', href);
+
+                            // Assign some name and download attribute to a tag that has name of Generate
                             $('#generate').attr('download', 'imagify.png');
                       });
 
