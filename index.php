@@ -96,7 +96,7 @@
             <button type="submit" class="btn btn-default" id="preview">Preview</button>
           </div>
           <div class="col-sm-offset-2 col-sm-10">
-            <a href="https://www.google.com" type="button" class="btn btn-default" id="generate">Generate</a>
+            <a href="#" type="button" class="btn btn-default" id="generate">Generate</a>
           </div>
         </div>
       </form>
